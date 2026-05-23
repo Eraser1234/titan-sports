@@ -42,7 +42,7 @@ function renderProducts() {
     </tr>
     ${list.map(p => `
       <tr>
-        <td><img src="${esc(p.imagem)}" width="60" height="45" style="object-fit:cover;border-radius:6px"></td>
+        <td><img src="${esc(p.imagem)}" width="60" height="45" style="object-fit:${p.imageFit||'cover'};border-radius:6px"></td>
         <td>${esc(p.nome)}</td>
         <td>${esc(p.categoria)}</td>
         <td>R$ ${p.preco.toFixed(2).replace('.', ',')}</td>
@@ -58,7 +58,7 @@ function openProduct(id) {
   const list = DB.getProducts();
   const p = id
     ? list.find(x => x.id === id)
-    : { nome: '', categoria: '', descricao: '', preco: 0, imagem: '', link: '', destaque: false, mediaType: 'image' };
+    : { nome: '', categoria: '', descricao: '', preco: 0, imagem: '', link: '', destaque: false, mediaType: 'image', imageFit: 'cover' };
 
   document.getElementById('modalTitle').textContent = id ? 'Editar Produto' : 'Novo Produto';
   document.getElementById('modalForm').innerHTML = `
@@ -104,6 +104,13 @@ function openProduct(id) {
     <label>
       <input type="checkbox" name="destaque" ${p.destaque ? 'checked' : ''}> Exibir em destaque na página inicial
     </label>
+    <label>Enquadramento da Imagem
+      <select id="f_imageFit" name="imageFit">
+        <option value="cover" ${(p.imageFit||'cover')==='cover'?'selected':''}>Cobrir (corta o excesso)</option>
+        <option value="contain" ${(p.imageFit||'cover')==='contain'?'selected':''}>Enquadrar (mostra tudo)</option>
+        <option value="fill" ${(p.imageFit||'cover')==='fill'?'selected':''}>Esticar (sem proporção)</option>
+      </select>
+    </label>
     <div class="modal-actions">
       <button type="button" onclick="closeModal()">Cancelar</button>
       <button type="submit" class="btn-primary">Salvar</button>
@@ -122,7 +129,8 @@ function openProduct(id) {
       imagem:    base64 || fd.get('imagem').trim(),
       link:      fd.get('link').trim(),
       destaque:  fd.get('destaque') === 'on',
-      mediaType: fd.get('mediaType') || 'image'
+      mediaType: fd.get('mediaType') || 'image',
+      imageFit:  fd.get('imageFit') || 'cover'
     };
     const arr = DB.getProducts();
     if (id) {

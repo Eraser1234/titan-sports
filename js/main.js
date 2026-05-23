@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function cardHTML(p) {
   const media = p.mediaType === 'video'
     ? `<video src="${p.imagem}" autoplay muted loop playsinline></video>`
-    : `<img src="${p.imagem}" alt="${escHtml(p.nome)}" loading="lazy">`;
+    : `<img src="${p.imagem}" alt="${escHtml(p.nome)}" loading="lazy" style="object-fit:${p.imageFit||'cover'}">`;
   return `
     <article class="card">
       ${media}
