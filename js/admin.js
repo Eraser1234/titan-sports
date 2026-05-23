@@ -594,6 +594,34 @@ function exportData() {
 }
 
 // ================================================================
+// PUBLICAR NO SITE (via Atualizador)
+// ================================================================
+document.getElementById('publishBtn').addEventListener('click', async e => {
+  e.preventDefault();
+  const btn = e.currentTarget;
+  btn.textContent = '⏳ Publicando...';
+  try {
+    const r = await fetch('http://localhost:4242/update-data-js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ produtos: DB.getProducts(), nomeLoja: 'Titan Sports' })
+    });
+    const data = await r.json();
+    if (data.ok) {
+      btn.textContent = '✅ Publicado!';
+      showToast('Produtos gravados! Agora use o Atualizador para fazer o deploy.');
+      setTimeout(() => { btn.textContent = '🚀 Publicar no Site'; }, 3000);
+    } else {
+      throw new Error(data.error);
+    }
+  } catch (err) {
+    btn.textContent = '❌ Erro';
+    alert('Erro ao publicar: ' + err.message + '\n\nO Atualizador está rodando? (iniciar.bat)');
+    setTimeout(() => { btn.textContent = '🚀 Publicar no Site'; }, 3000);
+  }
+});
+
+// ================================================================
 // INICIALIZAÇÃO
 // ================================================================
 renderProducts();
