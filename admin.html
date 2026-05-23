@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Titã Sports</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="login-body">
+
+<form id="loginForm" class="login-box" novalidate>
+  <h1>TITÃ <span>ADMIN</span></h1>
+  <p style="text-align:center;color:#666;font-size:14px;margin-top:-8px">Área restrita</p>
+
+  <input
+    id="user"
+    type="text"
+    placeholder="Usuário"
+    autocomplete="username"
+    required
+  >
+  <input
+    id="pass"
+    type="password"
+    placeholder="Senha"
+    autocomplete="current-password"
+    required
+  >
+
+  <button type="submit" class="btn btn-primary">Entrar</button>
+  <p id="msg" class="error" aria-live="polite"></p>
+</form>
+
+<script src="js/data.js"></script>
+<script>
+  // Se já está logado, vai direto ao painel
+  if (sessionStorage.getItem('tita_logged') === '1') {
+    location.href = 'painel.html';
+  }
+
+  document.getElementById('loginForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const s = DB.getSettings();
+    const u = document.getElementById('user').value.trim();
+    const p = document.getElementById('pass').value;
+    const msg = document.getElementById('msg');
+
+    if (u === s.adminUser && p === s.adminPass) {
+      msg.textContent = '';
+      sessionStorage.setItem('tita_logged', '1');
+      location.href = 'painel.html';
+    } else {
+      msg.textContent = 'Usuário ou senha inválidos.';
+      document.getElementById('pass').value = '';
+      document.getElementById('pass').focus();
+    }
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel — Titã Sports</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="admin-body">
+
+<!-- ===== SIDEBAR ===== -->
+<aside class="sidebar">
+  <h2 style="display:flex;align-items:center;gap:8px;"><span class="logo-icon" style="width:34px;height:34px;font-size:16px;border-radius:4px;">T</span> TITÃ <span>ADMIN</span></h2>
+  <nav>
+    <a href="#" data-tab="produtos" class="active">📦 Produtos</a>
+    <a href="#" data-tab="depoimentos">💬 Depoimentos</a>
+    <a href="#" data-tab="beneficios">⭐ Benefícios</a>
+    <a href="#" data-tab="config">⚙️ Configurações</a>
+    <a href="index.html" target="_blank" rel="noopener">🌐 Ver Site</a>
+    <a href="#" id="exportBtn">📦 Exportar dados</a>
+    <a href="#" id="logout">🚪 Sair</a>
+  </nav>
+</aside>
+
+<!-- ===== CONTEÚDO PRINCIPAL ===== -->
+<main class="admin-main">
+
+  <!-- TAB: PRODUTOS -->
+  <section id="tab-produtos" class="tab active">
+    <h1>Gerenciar Produtos</h1>
+    <button class="btn btn-primary btn-sm" onclick="openProduct()">+ Novo Produto</button>
+    <table id="tblProducts"></table>
+  </section>
+
+  <!-- TAB: DEPOIMENTOS -->
+  <section id="tab-depoimentos" class="tab">
+    <h1>Gerenciar Depoimentos</h1>
+    <button class="btn btn-primary btn-sm" onclick="openTesti()">+ Novo Depoimento</button>
+    <table id="tblTesti"></table>
+  </section>
+
+  <!-- TAB: BENEFÍCIOS -->
+  <section id="tab-beneficios" class="tab">
+    <h1>Gerenciar Benefícios</h1>
+    <button class="btn btn-primary btn-sm" onclick="openBenef()">+ Novo Benefício</button>
+    <table id="tblBenef"></table>
+  </section>
+
+  <!-- TAB: CONFIGURAÇÕES -->
+  <section id="tab-config" class="tab">
+    <h1>Configurações Gerais</h1>
+    <form id="formConfig" class="form-grid"></form>
+  </section>
+
+</main>
+
+<!-- ===== MODAL ===== -->
+<div id="modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-box">
+    <h2 id="modalTitle"></h2>
+    <form id="modalForm" novalidate></form>
+  </div>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>
